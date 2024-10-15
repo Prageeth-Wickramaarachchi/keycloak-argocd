@@ -28,6 +28,10 @@ spec:
           value: "keycloak.local"
         - name: KC_HOSTNAME_STRICT_HTTPS
           value: "true"
+        - name: KEYCLOAK_HTTPS_CERTIFICATE_FILE
+          value: "/etc/x509/https/tls.crt"
+        - name: KEYCLOAK_HTTPS_CERTIFICATE_KEY_FILE
+          value: "/etc/x509/https/tls.key"
         ports:
         - name: https
           containerPort: 8443
