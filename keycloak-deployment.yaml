@@ -15,19 +15,21 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:24.0.5
-          args: ["start-dev"]
+          image: bitnami/keycloak:latest  # Adjust the image as necessary
           env:
-            - name: KEYCLOAK_ADMIN
-              value: "admin"
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: "admin"
-            - name: KC_PROXY
-              value: "edge"
+            - name: KEYCLOAK_USER
+              value: admin
+            - name: KEYCLOAK_PASSWORD
+              value: adminpassword
+            - name: KEYCLOAK_HTTPS_PORT
+              value: "8443"
           ports:
-            - name: http
-              containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /realms/master
-              port: 8080
+            - containerPort: 8443  # Use the HTTPS port
+          volumeMounts:
+            - name: keycloak-tls
+              mountPath: /opt/bitnami/keycloak/standalone/configuration/tls
+              readOnly: true
+      volumes:
+        - name: keycloak-tls
+          secret:
+            secretName: keycloak-tls
