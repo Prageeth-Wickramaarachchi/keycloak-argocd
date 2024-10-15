@@ -6,9 +6,12 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
-      targetPort: 8080  # Optional, if you still want to expose HTTP
-    - port: 8443
-      targetPort: 8443  # HTTPS port
+    - name: http  # Adding a name for the HTTP port
+      port: 8080
+      targetPort: 8080
+    - name: https  # Adding a name for the HTTPS port
+      port: 8443
+      targetPort: 8443
   selector:
     app: keycloak
+
