@@ -11,4 +11,4 @@ spec:
     name: https
   selector:
     app: keycloak
-  type: LoadBalancer
+  type: NodePort
