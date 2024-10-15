@@ -5,10 +5,8 @@ metadata:
   namespace: keycloak
 spec:
   ports:
-  - port: 8443
-    targetPort: 8443
-    protocol: TCP
-    name: https
+  - port: 8080
+     targetPort: 8080
   selector:
     app: keycloak
-  type: NodePort
+  type: LoadBalancer
