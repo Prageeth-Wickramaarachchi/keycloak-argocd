@@ -14,32 +14,20 @@ spec:
         app: keycloak
     spec:
       containers:
-      - name: keycloak
-        image: quay.io/keycloak/keycloak:24.0.5
-        args: ["start-dev"]
-        env:
-        - name: KEYCLOAK_ADMIN
-          value: "admin"
-        - name: KEYCLOAK_ADMIN_PASSWORD
-          value: "admin"
-        - name: KC_PROXY
-          value: "edge"
-        - name: KC_HOSTNAME
-          value: "keycloak.local"
-        - name: KC_HOSTNAME_STRICT_HTTPS
-          value: "true"
-        - name: KEYCLOAK_HTTPS_CERTIFICATE_FILE
-          value: "/etc/x509/https/tls.crt"
-        - name: KEYCLOAK_HTTPS_CERTIFICATE_KEY_FILE
-          value: "/etc/x509/https/tls.key"
-        ports:
-        - name: https
-          containerPort: 8443
-        volumeMounts:
-        - name: tls-certs
-          mountPath: /etc/x509/https
-          readOnly: true
-      volumes:
-      - name: tls-certs
-        secret:
-          secretName: keycloak-tls
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:24.0.5
+          args: ["start-dev"]
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "admin"
+            - name: KC_PROXY
+              value: "edge"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /realms/master
+              port: 8080
